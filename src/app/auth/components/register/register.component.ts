@@ -3,10 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {select, Store} from '@ngrx/store'
 import {registerAction} from '../../store/actions/register.action'
 import {Observable} from 'rxjs'
-import {
-  isSubmittingSelector,
-  validationErrorsSelector,
-} from '../../store/selectors'
+import {isSubmittingSelector, validationErrorsSelector} from '../../store/selectors'
 import {AuthService} from '../../services/auth.service'
 import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 import {BackendErrorsInterface} from '../../../shared/types/backendErrors.interface'
@@ -16,42 +13,39 @@ import {BackendErrorsInterface} from '../../../shared/types/backendErrors.interf
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
-  form: FormGroup
+export class RegisterComponent implements OnInit{
+  form: FormGroup;
   isSubmitting$: Observable<boolean>
   backendErrors$: Observable<BackendErrorsInterface | null>
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private authService: AuthService,
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.initializeForm()
-    this.initializeValues()
+    this.initializeForm();
+    this.initializeValues();
   }
 
-  initializeForm(): void {
+  initializeForm(): void{
     this.form = this.fb.group({
       username: ['', Validators.required],
       email: '',
-      password: '',
-    })
+      password: ''
+    });
 
-    console.log(this.form.valid)
+    console.log(this.form.valid);
   }
 
-  initializeValues(): void {
+  initializeValues() : void{
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector))
   }
 
-  onSubmit(): void {
+  onSubmit(): void{
     console.log(this.form.value)
     const request: RegisterRequestInterface = {
-      user: this.form.value,
+      user: this.form.value
     }
-    this.store.dispatch(registerAction({request}))
+    this.store.dispatch(registerAction({request}));
   }
+
 }
