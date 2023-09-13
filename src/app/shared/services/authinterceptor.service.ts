@@ -4,7 +4,7 @@ import {Observable} from 'rxjs'
 import {PersistenceService} from './persistence.service'
 
 @Injectable()
-export class Authinterceptor implements HttpInterceptor{
+export class AuthinterceptorService implements HttpInterceptor{
 
   constructor(private persistenceService: PersistenceService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

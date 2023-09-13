@@ -9,8 +9,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {EffectsModule} from '@ngrx/effects'
 import {TopBarModule} from './shared/modules/top-bar/topBar.module'
 import {PersistenceService} from './shared/services/persistence.service'
-import {Authinterceptor} from './shared/services/authinterceptor'
+import {AuthinterceptorService} from './shared/services/authinterceptor.service'
 import {GlobalFeedModule} from './globalFeed/globalFeed.module'
+import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store'
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,8 @@ import {GlobalFeedModule} from './globalFeed/globalFeed.module'
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({router: routerReducer}),
+    StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([]),
     HttpClientModule,
     TopBarModule,
@@ -30,10 +32,11 @@ import {GlobalFeedModule} from './globalFeed/globalFeed.module'
       trace: false,
       traceLimit: 75,
     }),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     PersistenceService,
-    {provide: HTTP_INTERCEPTORS, useClass: Authinterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthinterceptorService, multi: true},
   ],
   bootstrap: [AppComponent],
 })

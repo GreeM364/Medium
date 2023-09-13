@@ -27,5 +27,10 @@
       HERE LIST OF TAGS
     </a>
   </div>
-  PAGINATION
+  <medium-pagination
+    [total]="(feed$ | async)?.articlesCount"
+    [limit]="limit"
+    [url]="baseUrl"
+    [currentPage]="currentPage">
+  </medium-pagination>
 </div>

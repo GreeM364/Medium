@@ -9,16 +9,18 @@ import {FeedService} from './services/feed.service'
 import {RouterLink} from '@angular/router'
 import {ErrorMessageModule} from "../errorMessage/errorMessage.module";
 import {LoadingModule} from "../loading/loading.module";
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EffectsModule.forFeature([GetFeedEffect]),
-    StoreModule.forFeature('feed', reducers),
-    RouterLink,
-    ErrorMessageModule,
-    LoadingModule
-  ],
+    imports: [
+        CommonModule,
+        EffectsModule.forFeature([GetFeedEffect]),
+        StoreModule.forFeature('feed', reducers),
+        RouterLink,
+        ErrorMessageModule,
+        LoadingModule,
+        PaginationModule
+    ],
   declarations: [FeedComponent],
   exports: [FeedComponent],
   providers: [FeedService],
