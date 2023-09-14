@@ -1,19 +1,30 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core'
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core'
 import {select, Store} from '@ngrx/store'
 import {getFeedAction} from '../../store/actions/getFeed.action'
 import {Observable, Subscription} from 'rxjs'
 import {GetFeedResponseInterface} from '../../types/getFeedResponse.interface'
-import {errorSelector, feedSelector, isLoadingSelector} from '../../store/selectors'
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {environment} from "../../../../../../environment/environment";
-import {parseUrl, stringify} from "query-string";
+import {
+  errorSelector,
+  feedSelector,
+  isLoadingSelector,
+} from '../../store/selectors'
+import {ActivatedRoute, Params, Router} from '@angular/router'
+import {environment} from '../../../../../../environment/environment'
+import {parseUrl, stringify} from 'query-string'
 
 @Component({
   selector: 'medium-feed',
   templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.css']
+  styleUrls: ['./feed.component.css'],
 })
-export class FeedComponent implements OnInit, OnDestroy {
+export class FeedComponent implements OnInit, OnDestroy, OnChanges {
   @Input('apiUrl') apiUrlProps: string
 
   feed$: Observable<GetFeedResponseInterface | null>
@@ -27,7 +38,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +50,20 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.queryParamsSubscription.unsubscribe()
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    const isApiUrlChanged =
+      !changes['apiUrlProps'].firstChange && changes['apiUrlProps'].currentValue !== changes['apiUrlProps'].previousValue
+
+    if (isApiUrlChanged)
+      this.fetchFeed()
+  }
+
   initializeListeners(): void {
     this.queryParamsSubscription = this.route.queryParams.subscribe(
       (params: Params) => {
         this.currentPage = Number(params['page'] || '1')
         this.fetchFeed()
-      }
+      },
     )
   }
 
@@ -61,7 +80,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     const stringifyParams = stringify({
       limit: this.limit,
       offset,
-      ...parsedUrl.query
+      ...parsedUrl.query,
     })
     const apiUrlWithParams = `${parsedUrl.url}?${stringifyParams}`
     this.store.dispatch(getFeedAction({url: apiUrlWithParams}))

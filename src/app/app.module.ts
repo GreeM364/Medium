@@ -12,6 +12,8 @@ import {PersistenceService} from './shared/services/persistence.service'
 import {AuthinterceptorService} from './shared/services/authinterceptor.service'
 import {GlobalFeedModule} from './globalFeed/globalFeed.module'
 import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store'
+import {YourFeedModule} from './yourFeed/yourFeed.module'
+import {TagFeedModule} from './tagFeed/tagFeed.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store'
     HttpClientModule,
     TopBarModule,
     GlobalFeedModule,
+    YourFeedModule,
+    TagFeedModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
