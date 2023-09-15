@@ -1,6 +1,6 @@
 import {BackendErrorsInterface} from '../../shared/types/backendErrors.interface'
 
-export class CreateArticleStateInterface{
+export interface CreateArticleStateInterface{
   isSubmitting: boolean
   validationErrors: BackendErrorsInterface | null
 }
