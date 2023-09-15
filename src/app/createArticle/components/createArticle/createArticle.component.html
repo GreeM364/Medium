@@ -1,0 +1,6 @@
+<medium-article-form
+  [initialValues]="initializeValues"
+  [isSubmitting]="isSubmitting$ | async"
+  [errors]="backendErrors$ | async"
+  (articleSubmit)="onSubmit($event)"
+></medium-article-form>
