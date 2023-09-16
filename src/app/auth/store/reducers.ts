@@ -1,9 +1,12 @@
 import {createReducer, on, Action} from '@ngrx/store'
 
-import {AuthStateInterface} from 'src/app/auth/types/authState.interface'
-import {registerAction, registerFailureAction, registerSuccessAction} from 'src/app/auth/store/actions/register.action'
+import {updateCurrentUserSuccessAction} from './actions/updateCurrentUser.action'
+import {AuthStateInterface} from '../types/authState.interface'
+import {registerAction, registerFailureAction, registerSuccessAction} from './actions/register.action'
 import {loginAction, loginFailureAction, loginSuccessAction} from './actions/login.action'
 import {getCurrentUserAction, getCurrentUserFailureAction, getCurrentUserSuccessAction} from './actions/getCurrentUser'
+import {state} from '@angular/animations'
+import {logoutAction} from './actions/sync.action'
 
 
 const initialState: AuthStateInterface = {
@@ -92,7 +95,21 @@ const authReducer = createReducer(
       isLoggedIn: false,
       currentUser: null
     })
-  )
+  ),
+  on(
+    updateCurrentUserSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      currentUser: action.currentUser
+    })
+  ),
+  on(
+    logoutAction,
+    (): AuthStateInterface => ({
+      ...initialState,
+      isLoggedIn: false
+    })
+  ),
 )
 
 export function reducers(state: AuthStateInterface, action: Action) {
