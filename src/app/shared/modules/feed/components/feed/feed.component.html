@@ -17,7 +17,12 @@
         <span class="date">{{ article.createdAt }}</span>
       </div>
       <div class="pull-xs-right">
-        ADD TO FAVORITES
+        <medium-add-to-favorites
+          [isFavorited]="article.favorited"
+          [articleSlug]="article.slug"
+          [favoritesCount]="article.favoritesCount"
+        >
+        </medium-add-to-favorites>
       </div>
     </div>
     <a [routerLink]="['/articles', article.slug]" class="preview-link">
@@ -31,6 +36,7 @@
     [total]="(feed$ | async)?.articlesCount"
     [limit]="limit"
     [url]="baseUrl"
-    [currentPage]="currentPage">
+    [currentPage]="currentPage"
+  >
   </medium-pagination>
 </div>
