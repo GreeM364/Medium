@@ -77,12 +77,13 @@ export class FeedComponent implements OnInit, OnDestroy, OnChanges {
   fetchFeed(): void {
     const offset = this.currentPage * this.limit - this.limit
     const parsedUrl = parseUrl(this.apiUrlProps)
-    const stringifyParams = stringify({
+    console.log(this.apiUrlProps)
+    const stringifiedParams = stringify({
       limit: this.limit,
       offset,
-      ...parsedUrl.query,
+      ...parsedUrl.query
     })
-    const apiUrlWithParams = `${parsedUrl.url}?${stringifyParams}`
+    const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
     this.store.dispatch(getFeedAction({url: apiUrlWithParams}))
   }
 }

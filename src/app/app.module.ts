@@ -18,6 +18,7 @@ import {ArticleModule} from './article/article.module'
 import {CreateArticleModule} from './createArticle/createArticle.module'
 import {EditArticleModule} from './editArticle/editArticle.module'
 import {SettingsModule} from './settings/settings.module'
+import {UserProfileModule} from './userProfile/userProfile.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,7 @@ import {SettingsModule} from './settings/settings.module'
     ArticleModule,
     EditArticleModule,
     SettingsModule,
+    UserProfileModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
